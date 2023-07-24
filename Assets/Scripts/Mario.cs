@@ -48,6 +48,12 @@ public class Mario : MonoBehaviour
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * 180);
             AudioManager.Instance.Play(1);
         }
+
+        if (transform.position.y < -90f && transform.position.y > -100f)
+        {
+            AudioManager.Instance.Play(0, true);
+            Invoke("GameOver", 3.5f);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

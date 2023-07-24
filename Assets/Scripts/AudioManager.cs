@@ -11,12 +11,13 @@ public class AudioManager : MonoBehaviour
     // 音效片段数组 0死亡2， 1跳 ，2踩敌人 ，3吃金币
     public AudioClip[] audioClips;
 
+    private bool isPlaying = true;
+
     // 游戏一开始执行
     void Awake()
     {
 
         // 确定场景中是否存在音效管理器
-        // 如果没有
         if (Instance == null)
         {
             // 标志自身是
@@ -27,7 +28,6 @@ public class AudioManager : MonoBehaviour
             // 查找音效播放器组件
             audioSource = GetComponent<AudioSource>();
         }
-        // 如果没有
         else
         {
             // 说明自己是多余的，销毁自己
@@ -39,11 +39,12 @@ public class AudioManager : MonoBehaviour
     // 检查背景音乐
     public void CheckBG()
     {
+        Debug.Log(audioSource.isPlaying);
         // 如果背景音乐没有在播放中
-        if (audioSource.isPlaying == false)
+        if (isPlaying == false)
         {
-            // 播放背景音乐
             audioSource.Play();
+            isPlaying = true;
         }
     }
     // 播放音效 播放第几个，是不是要关闭背景音乐
@@ -54,6 +55,7 @@ public class AudioManager : MonoBehaviour
         {
             // 停止背景音乐
             audioSource.Stop();
+            isPlaying = false;
         }
         // 播放一次指定的音效
         audioSource.PlayOneShot(audioClips[index]);
