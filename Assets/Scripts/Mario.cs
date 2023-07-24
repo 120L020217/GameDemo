@@ -49,10 +49,10 @@ public class Mario : MonoBehaviour
             AudioManager.Instance.Play(1);
         }
 
-        if (transform.position.y < -90f && transform.position.y > -100f)
+        if (transform.position.y < -99f && transform.position.y > -100f)
         {
-            AudioManager.Instance.Play(0, true);
-            Invoke("GameOver", 3.5f);
+
+            Die();
         }
     }
 
@@ -69,13 +69,30 @@ public class Mario : MonoBehaviour
             animator.SetTrigger("isDie");
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * 100);
             Destroy(GetComponent<CapsuleCollider2D>());
-            AudioManager.Instance.Play(0, true);
-            Invoke("GameOver", 3.5f);
+            /*AudioManager.Instance.Play(0, true);
+            Invoke("GameOver", 3.5f);*/
+            Die();
         }
     }
 
-    public void GameOver()
+    public void Die()
     {
+        AudioManager.Instance.Play(0, true);
+        DataTransform.Instance.HP -= 1;
+        Invoke("Settlement", 3.5f);
+        Debug.Log("residual lives: " + DataTransform.Instance.HP);
+        
+    }
+
+    public void Settlement()
+    {
+        Debug.Log("test here");
+        SceneManager.LoadScene("Settlement");
+    }
+
+    public void Revive()
+    {
+        Debug.Log("cjm" + SceneManager.GetActiveScene().name);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -101,6 +118,8 @@ public class Mario : MonoBehaviour
         else if (collision.gameObject.tag == "WinObject")
         {
             int currLV = SceneManager.GetActiveScene().buildIndex;
+            Debug.Log("current active scene index: " + currLV);
+            Debug.Log("building setting scene count: " + SceneManager.sceneCountInBuildSettings);
 
             if (currLV == SceneManager.sceneCountInBuildSettings - 1)
             {
