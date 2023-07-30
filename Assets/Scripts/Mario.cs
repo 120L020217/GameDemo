@@ -49,11 +49,11 @@ public class Mario : MonoBehaviour
             AudioManager.Instance.Play(1);
         }
 
-        if (transform.position.y < -99f && transform.position.y > -100f)
+        /*if (transform.position.y < -99f && transform.position.y > -100f)
         {
 
             Die();
-        }
+        }*/
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -73,6 +73,11 @@ public class Mario : MonoBehaviour
             Invoke("GameOver", 3.5f);*/
             Die();
         }
+        else if (collision.gameObject.tag == "DeathGround")
+        {
+            // animator.SetTrigger("isDie");
+            Die();
+        }
     }
 
     public void Die()
@@ -90,11 +95,11 @@ public class Mario : MonoBehaviour
         SceneManager.LoadScene("Settlement");
     }
 
-    public void Revive()
+    /*public void Revive()
     {
         Debug.Log("cjm" + SceneManager.GetActiveScene().name);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    }*/
 
     private void OnCollisionExit2D(Collision2D collision)
     {
