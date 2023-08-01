@@ -40,6 +40,7 @@ public class SettleManager : MonoBehaviour
         if (HPNUM <= 0)
         {
             HPText.text = "You LOSE";
+            Invoke("ReStart", 3.5f);
         }
         if (DataTransform.Instance.HP > 0)
         {
@@ -47,10 +48,18 @@ public class SettleManager : MonoBehaviour
         }
     }
 
+    void ReStart()
+    {
+        HPNUM = 3;
+        DataTransform.Instance.HP = 3;
+        SceneManager.LoadScene(0);
+    }
+
     public void Revive()
     {
         Debug.Log("cjm" + SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene("MarioDemo");
+        //SceneManager.LoadScene("MarioDemo");
+        SceneManager.LoadScene(DataTransform.Instance.scene);
     }
 
     // Update is called once per frame

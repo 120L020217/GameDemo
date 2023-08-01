@@ -81,19 +81,20 @@ public class Mario : MonoBehaviour
         DataTransform.Instance.HP -= 1;
         Invoke("Settlement", 3.5f);
         Debug.Log("residual lives: " + DataTransform.Instance.HP);
-        
+        DataTransform.Instance.scene = SceneManager.GetActiveScene().name;
     }
 
     public void Settlement()
     {
         Debug.Log("test here");
+
         SceneManager.LoadScene("Settlement");
     }
 
     public void Revive()
     {
         Debug.Log("cjm" + SceneManager.GetActiveScene().name);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(DataTransform.Instance.scene);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -102,6 +103,16 @@ public class Mario : MonoBehaviour
         {
             animator.SetBool("isJump", true);
             isOnGround = false;
+        }
+        else if (collision.gameObject.tag == "MisteryStone")
+        {
+            //Debug.Log("mario trigger invoked");
+            //UIManager.Instance.GoldNum += 1;
+            //transform.GetComponent<Collider>().enabled = false;
+            //Destroy(collision.gameObject);
+            //Debug.Log("mario trigger invoked 1");
+            collision.gameObject.GetComponent<MisteryStoneController>().GenGold();
+            //AudioManager.Instance.Play(3);
         }
     }
 
@@ -115,6 +126,7 @@ public class Mario : MonoBehaviour
             Destroy(collision.gameObject);
             AudioManager.Instance.Play(3);
         }
+        
         else if (collision.gameObject.tag == "WinObject")
         {
             int currLV = SceneManager.GetActiveScene().buildIndex;

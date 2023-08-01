@@ -6,6 +6,7 @@ public class DataTransform : MonoBehaviour
 {
     public static DataTransform Instance { get; private set; }
     public int HP { get; set; } = 3;
+    public string scene = "Menu";
 
     void Awake()
     {
